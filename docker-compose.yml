@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  nest:
+    build:
+      context: .
+      dockerfile: ./.docker/nest.dockerfile
+    container_name: smart-ranking-api
+    volumes:
+      - ./node_modules:/var/www/node_modules
+    image: node
+    ports:
+      - "80:3000"
+    networks:
+      - smart-ranking-network
+    depends_on:
+        - "mongo"
+  mongo:
+    image: mongo
+    container_name: smart-ranking-db
+    volumes:
+      - ./database:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - smart-ranking-network
+networks:
+  smart-ranking-network:
+    driver: bridge

@@ -8,8 +8,6 @@ export class PlayersService {
 
     private players: Players[] = [];
 
-    private readonly logger = new Logger(PlayersService.name);
-
     async createOrUpdate(createPlayerDto: CreatePlayerDto): Promise<void> {
         const { email } = createPlayerDto;
         const playerFound = await this.findByEmail(email);
