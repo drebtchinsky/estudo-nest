@@ -1,51 +1,41 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { randomUUID } from 'crypto';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreatePlayerDto } from './dtos/create-player.dto';
 import { Players } from './interfaces/players.interface';
 
 @Injectable()
 export class PlayersService {
 
-    private players: Players[] = [];
+    constructor(@InjectModel('Player') private readonly playerModel: Model<Players>) { }
 
-    async createOrUpdate(createPlayerDto: CreatePlayerDto): Promise<void> {
+    async createOrUpdate(createPlayerDto: CreatePlayerDto): Promise<Players> {
         const { email } = createPlayerDto;
         const playerFound = await this.findByEmail(email);
         if (playerFound) {
-            return this.update(playerFound, createPlayerDto);
+            return this.update(createPlayerDto);
         }
         return this.create(createPlayerDto);
     }
 
     async findByEmail(email: string): Promise<Players> {
-        return this.players.find(player => player.email === email);
+        return this.playerModel.findOne({ email }).exec();
     }
 
     async findAll(): Promise<Players[]> {
-        return this.players;
+        return this.playerModel.find().exec();
     }
 
-    async deleteByEmail(email: string): Promise<void> {
-        const playerFound = await this.findByEmail(email);
-        this.players = this.players.filter(player => player.email !== playerFound.email);
+    async deleteByEmail(email: string): Promise<any> {
+        return this.playerModel.remove({ email }).exec();
     }
 
-    private create(createPlayerDto: CreatePlayerDto): void {
-        const { name, email, cellPhone } = createPlayerDto;
-        const player: Players = {
-            _id: randomUUID(),
-            name,
-            email,
-            cellPhone,
-            ranking: "A",
-            rankingPosition: 1,
-            urlPicture: ''
-        }
-        this.players.push(player);
+    private async create(createPlayerDto: CreatePlayerDto): Promise<Players> {
+        const playerCreated = new this.playerModel(createPlayerDto);
+        return playerCreated.save();
     }
 
-    private update(player: Players, createPlayerDto: CreatePlayerDto): void {
-        const { name } = createPlayerDto;
-        player.name = name;
+    private async update(createPlayerDto: CreatePlayerDto): Promise<Players> {
+        return this.playerModel.findOneAndUpdate({ email: createPlayerDto.email }, { $set: createPlayerDto }).exec();
     }
 }
