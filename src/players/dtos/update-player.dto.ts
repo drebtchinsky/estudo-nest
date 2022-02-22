@@ -1,16 +1,8 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
-export class UpdatePlayerDto {
-
-    @IsNotEmpty()
-    readonly _id: string
+export class UpdatePlayerDto{
 
     @IsNotEmpty()
-    readonly cellPhone: string
-
-    @IsEmail()
-    readonly email: string
-
-    @MinLength(5)
-    readonly name: string
+    readonly _id: string;
+    readonly name?: string;
 }

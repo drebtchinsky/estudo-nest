@@ -6,32 +6,32 @@ import { PlayersService } from './players.service';
 
 @Controller('api/v1/players')
 export class PlayersController {
-    constructor(private readonly playersService: PlayersService) { }
+    constructor(private readonly service: PlayersService) { }
 
     @Post()
     @UsePipes(ValidationPipe)
     async create(@Body() params: CreatePlayerDto):Promise<void> {
-        await this.playersService.create(params);
+        await this.service.create(params);
     }
 
     @Put()
     @UsePipes(ValidationPipe)
     async update(@Body() params: UpdatePlayerDto):Promise<void> {
-        await this.playersService.update(params);
+        await this.service.update(params);
     }
 
     @Get()
     async findPlayers(): Promise<Players[]> {
-        return this.playersService.findAll();
+        return this.service.findAll();
     }
 
     @Get(':id')
     async findPlayerById(@Param('id') id: string): Promise<Players> {
-        return this.playersService.findById(id)
+        return this.service.findById(id)
     }
 
     @Delete(':id')
     async deletePlayer(@Param('id') id: string):Promise<void> {
-        await this.playersService.deleteById(id);
+        await this.service.deleteById(id);
     }
 }

@@ -11,8 +11,8 @@ export class PlayersService {
 
     constructor(@InjectModel('Player') private readonly playerModel: Model<Players>) { }
 
-    async findById(id: string): Promise<Players> {
-        return this.playerModel.findOne({ id }).exec();
+    async findById(_id: string): Promise<Players> {
+        return this.playerModel.findById(_id).exec();
     }
 
     async findAll(): Promise<Players[]> {
