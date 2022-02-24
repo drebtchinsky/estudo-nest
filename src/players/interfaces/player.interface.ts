@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface Players extends Document {
+export interface Player extends Document {
     readonly cellPhone: string;
     readonly email: string;
     name: string;
