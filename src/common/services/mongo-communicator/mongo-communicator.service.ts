@@ -1,8 +1,9 @@
-
+import { Injectable } from '@nestjs/common';
 import { DeleteResult } from "mongodb";
 import { Model } from 'mongoose';
 
-export class MongoServiceEntity<T>{
+@Injectable()
+export class MongoCommunicatorService<T> {
 
     constructor(protected readonly model: Model<T>) { }
 

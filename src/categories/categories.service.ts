@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { MongoServiceEntity } from 'src/entities/mongo-service.entity';
+import { MongoCommunicatorService } from '../common/services/mongo-communicator/mongo-communicator.service';
 import { Category } from './interfaces/category.interface';
 
 @Injectable()
-export class CategoriesService extends MongoServiceEntity<Category> {
+export class CategoriesService extends MongoCommunicatorService<Category> {
     constructor(@InjectModel('Category') protected readonly model: Model<Category>) {
         super(model);
     }
@@ -14,5 +14,9 @@ export class CategoriesService extends MongoServiceEntity<Category> {
         return this.model
             .findOne({ category: param })
             .exec();
+    }
+
+    async findById(_id: string): Promise<Category> {
+        return this.model.findById(_id).populate('players').exec();
     }
 }
