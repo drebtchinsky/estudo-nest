@@ -7,7 +7,7 @@ import { Player } from './interfaces/player.interface';
 @Injectable()
 export class PlayersService extends MongoCommunicatorService<Player>{
     constructor(@InjectModel('Player') protected readonly model: Model<Player>) {
-        super(model);
+        super(model, PlayersService.name);
     }
 
 }

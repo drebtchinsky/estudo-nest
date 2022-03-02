@@ -8,6 +8,7 @@ import { CategorySchema } from './interfaces/category.schema';
 @Module({
   imports: [PlayersModule,MongooseModule.forFeature([{ name: 'Category', schema: CategorySchema }])],
   controllers: [CategoriesController],
-  providers: [CategoriesService]
+  providers: [CategoriesService],
+  exports:[CategoriesService]
 })
 export class CategoriesModule {}
