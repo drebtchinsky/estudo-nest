@@ -25,12 +25,12 @@ export class MongoCommunicatorService<T> {
     }
 
     async create(param: any): Promise<T> {
-        this.logger.log(`create: ${param}`);
+        this.logger.log(`create: ${JSON.stringify(param)}`);
         return this.model.create(param);
     }
 
     async update(param: any): Promise<T> {
-        this.logger.log(`update: ${param}`);
+        this.logger.log(`update:  ${JSON.stringify(param)}`);
         return this.model.findByIdAndUpdate(param._id, { $set: param }).exec();
     }
 }
