@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { Match } from './../../matches/interfaces/match.interface';
 import { Category } from './../../categories/interfaces/category.interface';
 import { Player } from './../../players/interfaces/player.interface';
 import { StatusChallenge } from './status-challenge.enum';
@@ -10,6 +11,6 @@ export interface Challenge extends Document {
     dateTimeRequest: Date;
     dateTimeResponse?: Date;
     status: StatusChallenge;
-    matchResult: Array<string>;
+    match?: Match;
     winner?: Player;
 }

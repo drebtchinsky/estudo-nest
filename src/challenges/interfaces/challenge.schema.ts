@@ -13,10 +13,15 @@ export const ChallengeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
     },
+    dateTimeRequest: { type: Date },
+    dateTimeResponse: { type: Date },
+    status: { type: String },
     match: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Match"
     },
-    dateTimeRequest: { type: Date },
-    dateTimeResponse: { type: Date }
+    winner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Player"
+    },
 }, { timestamps: true, collection: 'challenges' });

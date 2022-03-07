@@ -47,7 +47,7 @@ export class ChallengesController {
     async updateChallenge(@Body() updateChallengeDto: UpdateChallengeDto): Promise<Challenge> {
         const {
             _id,
-            matchResult,
+            match,
             winner,
             status
         } = updateChallengeDto;
@@ -65,7 +65,7 @@ export class ChallengesController {
 
         return this.challengesService.update({
             _id,
-            matchResult,
+            match,
             winner,
             status,
             dateTimeResponse
