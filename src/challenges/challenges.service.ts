@@ -17,6 +17,7 @@ export class ChallengesService extends MongoCommunicatorService<Challenge> {
             .populate('requester')
             .populate('requested')
             .populate('category')
+            .populate('match')
             .exec();
     }
 }

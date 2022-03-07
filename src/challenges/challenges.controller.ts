@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { DeleteResult } from 'mongodb';
 import { CategoriesService } from './../categories/categories.service';
 import { Category } from './../categories/interfaces/category.interface';
@@ -20,6 +20,7 @@ export class ChallengesController {
     ) { }
 
     @Post()
+    @UsePipes(ValidationPipe)
     async createChallenge(@Body() createChallengeDto: CreateChallengeDto): Promise<Challenge> {
         const { requested, requester, category } = createChallengeDto;
         if (requested._id === requester._id) {
@@ -42,6 +43,7 @@ export class ChallengesController {
     }
 
     @Put()
+    @UsePipes(ValidationPipe)
     async updateChallenge(@Body() updateChallengeDto: UpdateChallengeDto): Promise<Challenge> {
         const {
             _id,
